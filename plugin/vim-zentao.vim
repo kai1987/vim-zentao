@@ -2,7 +2,7 @@ function! Zbug(...) range
 
 
   let l:to = a:1
-  let l:content = a:2
+  let l:content = join(a:000[1:]," ")
 
   :redir => l:href
   :silent :execute a:firstline.",".a:lastline."Gbrowse!"
@@ -23,3 +23,11 @@ endfunction
 
 command! -range -nargs=* Zbug <line1>,<line2>call Zbug(<f-args>)
 
+function! Ztask(...) range
+  echo a:1
+  echo a:2
+  echo a:000[1:]
+  echo join(a:000[1:]," ")
+endfunction
+
+command! -range -nargs=* Ztask <line1>,<line2>call Ztask(<f-args>)
