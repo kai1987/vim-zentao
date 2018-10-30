@@ -21,5 +21,5 @@ function! Zbug(...) range
 
 endfunction
 
-command! -range -nargs=* Zbug <line1>,<line2>call Ztask(<f-args>)
+command! -range -nargs=* Zbug <line1>,<line2>call Zbug(<f-args>)
 
