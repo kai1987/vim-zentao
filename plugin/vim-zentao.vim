@@ -1,4 +1,4 @@
-function! Ztask(...) range
+function! Zbug(...) range
 
 
   let l:to = a:1
@@ -8,13 +8,18 @@ function! Ztask(...) range
   :silent :execute a:firstline.",".a:lastline."Gbrowse!"
   :redir END
 
-  echo l:to
-  echo l:content
-  echo l:href
-  :echom system("zentao --account=liangkai --password= --to=".l:to." --host=http://zd-dragon.hd.com --project=5 --product=4 --module=334 --title='code review' --content='".l:href.l:content."'")
+  if has_key(g:zentao_user_map,l:to)
+    let l:to = get(g:zentao_user_map,l:to)
+  endif
+
+  let l:content = "<p><a href=\"".l:href."\" target=\"_blank\">".l:href."</a></p><br/><p>".l:content."</p>"
+
+  let l:cmd = "zentao --account=".g:zentao_account." --password=".g:zentao_password." --to=".l:to." --host=".g:zentao_host." --project=".g:zentao_project." --product=".g:zentao_product." --module=".g:zentao_module." --title=".g:zentao_review_title." --content='".l:content."'"
+  echo l:cmd
+  :echom system(l:cmd)
 
 
 endfunction
 
-command! -range -nargs=* Ztask <line1>,<line2>call Ztask(<f-args>)
+command! -range -nargs=* Zbug <line1>,<line2>call Ztask(<f-args>)
 
